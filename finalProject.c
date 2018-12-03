@@ -1,5 +1,10 @@
-//Joshua Fernandes, Sasha Ohayon, Syed Muhammed Shayaan
-// "The Pong"
+/*Joshua Fernandes, Sasha Ohayon, Syed Muhammed Shayaan
+"The Pong"
+Motor guide: ballFeeder = motorA,
+		rotateMotor = motorB,
+		launchMotor1 = motorC,
+		launchMotor2 = motorD;
+*/
 
 enum controllerState
 {
@@ -8,11 +13,6 @@ enum controllerState
 	CRIGHT = 2,
 	CBOTH = 3,
 };
-
-const int ballFeeder = motorA,
-	rotateMotor = motorB,
-	launchMotor1 = motorC,
-	launchMotor2 = motorD;
 
 int motorSpeed;
 
@@ -51,21 +51,21 @@ bool selectOrientation()
 	}
 
 	if (getGyroDegrees(S3) <= 0)
-		setMotor(rotateMotor, 20, -1);
+		setMotor(motorB, 20, -1);
 	else if (getGyroDegrees(S3) > 0)
-  		setMotor(rotateMotor, 20, 1);
+  		setMotor(motorB, 20, 1);
 
 	wait1Msec(500);
 
 	while (getControllerState() != CRIGHT)
 	{
   		if (getGyroDegrees(S3) < -35 || getGyroDegrees(S3) > 35)
-  			setMotor(rotateMotor, 20, getGyroDegrees(S3)/abs(getGyroDegrees(S3)));
+  			setMotor(motorB, 20, getGyroDegrees(S3)/abs(getGyroDegrees(S3)));
 
   		if (getButtonPress(buttonEnter))
 				return true;
 	}
-	setMotor(rotateMotor, 0, 1);
+	setMotor(motorB, 0, 1);
 	while (getControllerState() == CRIGHT);
 
 	return false;
@@ -82,15 +82,15 @@ bool selectSpeed()
 
 			if (motorSpeed == 100)
 			{
-				stepDown (launchMotor1, motorSpeed);
-				stepDown (launchMotor2, motorSpeed);
+				stepDown (motorC, motorSpeed);
+				stepDown (motorD, motorSpeed);
 				motorSpeed = 0;
 			}
 			else
 			{
 				motorSpeed += 20;
-				setMotor(launchMotor1, motorSpeed, 1);
-				setMotor(launchMotor2, motorSpeed, 1);
+				setMotor(motorC, motorSpeed, 1);
+				setMotor(motorD, motorSpeed, 1);
 			}
 		}
 	}
@@ -98,24 +98,24 @@ bool selectSpeed()
 }
 void releaseBall()
 {
-	setMotor(ballFeeder, 15, 1);
-	nMotorEncoder[ballFeeder] = 0 ;
-	while(nMotorEncoder[ballFeeder] < 120);
-	setMotor(ballFeeder, 0, 1);
+	setMotor(motorA, 15, 1);
+	nMotorEncoder[motorA] = 0 ;
+	while(nMotorEncoder[motorA] < 120);
+	setMotor(motorA, 0, 1);
 }
 void endProgram()
 {
 		if (getGyroDegrees(S3) != 0)
 		{
-			setMotor(rotateMotor, 15, getGyroDegrees(S3)/abs(getGyroDegrees(S3);
+			setMotor(motorB, 15, getGyroDegrees(S3)/abs(getGyroDegrees(S3);
 
 			while (getGyroDegrees(S3) != 0);
 
-			setMotor (rotateMotor, 0, 1);
+			setMotor (motorB, 0, 1);
 		}
 
-		stepDown (launchMotor1, motorSpeed);
-		stepDown (launchMotor2, motorSpeed);
+		stepDown (motorC, motorSpeed);
+		stepDown (motorD, motorSpeed);
 }
 task main()
 {
