@@ -146,9 +146,11 @@ task main()
 			if (getButtonPress(buttonEnter))
 			{
 				stopProgram = true;
-				continue;
+				break;
 			}
 		}
+		if (stopProgram)
+			continue;
 		while (getControllerState() == CBOTH);
 
 		releaseBall ();
