@@ -1,9 +1,9 @@
 /*Joshua Fernandes, Sasha Ohayon, Syed Muhammed Shayaan
 "The Pong"
 Motor guide: ballFeeder = motorA,
-		rotateMotor = motorB,
-		launchMotor1 = motorC,
-		launchMotor2 = motorD;
+             rotateMotor = motorB,
+             launchMotor1 = motorC,
+             launchMotor2 = motorD;
 */
 
 enum controllerState
@@ -27,7 +27,7 @@ controllerState getControllerState()
 		return CLEFT;
 	else if(touchCLEFT == 0 && touchCRIGHT == 1)
 		return CRIGHT;
- 	else
+	else
 		return CBOTH;
 }
 void setMotor(int motorValue, int power, int direction)
@@ -53,16 +53,16 @@ bool selectOrientation()
 	if (getGyroDegrees(S3) <= 0)
 		setMotor(motorB, 20, -1);
 	else if (getGyroDegrees(S3) > 0)
-  		setMotor(motorB, 20, 1);
+		setMotor(motorB, 20, 1);
 
 	wait1Msec(500);
 
 	while (getControllerState() != CRIGHT)
 	{
-  		if (getGyroDegrees(S3) < -35 || getGyroDegrees(S3) > 35)
-  			setMotor(motorB, 20, getGyroDegrees(S3)/abs(getGyroDegrees(S3)));
+		if (getGyroDegrees(S3) < -35 || getGyroDegrees(S3) > 35)
+			setMotor(motorB, 20, getGyroDegrees(S3)/abs(getGyroDegrees(S3)));
 
-  		if (getButtonPress(buttonEnter))
+		if (getButtonPress(buttonEnter))
 				return true;
 	}
 	setMotor(motorB, 0, 1);
